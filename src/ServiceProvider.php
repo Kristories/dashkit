@@ -42,6 +42,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     {
         $this->configure();
         $this->offerPublishing();
+        $this->registerCommands();
     }
 
     /**
