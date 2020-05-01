@@ -41,6 +41,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->configure();
+        $this->offerPublishing();
     }
 
     /**
@@ -70,6 +71,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $this->publishes([
                 __DIR__ . '/../resources/views/dashkit.blade.php' => resource_path('views/' . config('dashkit.view') . '.blade.php'),
             ], 'dashkit-view');
+        }
+    }
+
+    /**
+     * Register the Dashkit Artisan commands.
+     *
+     * @return void
+     */
+    protected function registerCommands()
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+                MakeTileCommand::class,
+            ]);
         }
     }
 }
