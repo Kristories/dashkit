@@ -8,6 +8,36 @@ use Kristories\Dashkit\Console\MakeTileCommand;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->registerRoutes();
+    }
+
+    /**
+     * Register the Dashkit routes.
+     *
+     * @return void
+     */
+    protected function registerRoutes()
+    {
+        Route::group([
+            'prefix' => config('dashkit.path'),
+            'middleware' => config('dashkit.middleware', 'web'),
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        });
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
     public function register()
     {
         $this->configure();
@@ -36,6 +66,10 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/dashkit.php' => config_path('dashkit.php'),
             ], 'dashkit-config');
+
+            $this->publishes([
+                __DIR__ . '/../resources/views/dashkit.blade.php' => resource_path('views/' . config('dashkit.view') . '.blade.php'),
+            ], 'dashkit-view');
         }
     }
 }
