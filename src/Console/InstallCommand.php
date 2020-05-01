@@ -32,6 +32,13 @@ class InstallCommand extends Command
         $this->callSilent('vendor:publish', ['--tag' => 'dashkit-view']);
         $this->callSilent('vendor:publish', ['--tag' => 'dashkit-config']);
 
+        $this->callSilent('vendor:publish', [
+            '--provider' => 'Spatie\Dashboard\DashboardServiceProvider',
+        ]);
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'livewire:config',
+        ]);
+
         $this->info('Dashkit scaffolding installed successfully.');
     }
 }
