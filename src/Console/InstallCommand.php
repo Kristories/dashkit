@@ -20,4 +20,18 @@ class InstallCommand extends Command
      * @var string
      */
     protected $description = 'Install all of the Dashkit resources';
+
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        $this->comment('Intalling..');
+        $this->callSilent('vendor:publish', ['--tag' => 'dashkit-view']);
+        $this->callSilent('vendor:publish', ['--tag' => 'dashkit-config']);
+
+        $this->info('Dashkit scaffolding installed successfully.');
+    }
 }
